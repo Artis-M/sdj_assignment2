@@ -46,6 +46,7 @@ private Model model;
             socket = new Socket(host, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
+            out.println(model.getUsername());
         } catch (IOException e) {
             System.out.println("Failed to connect to the server, make sure that the server is running");
         }

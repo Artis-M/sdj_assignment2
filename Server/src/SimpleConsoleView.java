@@ -1,3 +1,5 @@
+import model.Model;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 

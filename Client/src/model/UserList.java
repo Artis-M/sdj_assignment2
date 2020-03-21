@@ -32,4 +32,7 @@ public class UserList
       }
     }
   }
+  public int getSize(){
+    return userList.size();
+  }
 }

@@ -9,10 +9,10 @@ import network.NetworkType;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class CharClientReceiver implements Runnable{
+public class ChatClientReceiver implements Runnable{
     private BufferedReader in;
 private ChatClient client;
-    public CharClientReceiver(ChatClient client, BufferedReader in){
+    public ChatClientReceiver(ChatClient client, BufferedReader in){
 this.in = in;
 this.client = client;
     }
@@ -28,9 +28,11 @@ while(true){
             case MESSAGE:
                 Message message = gson.fromJson(reply, Message.class);
                 client.receivedMessage(message);
+                break;
             case USERLIST:
                 UserList userList = gson.fromJson(reply, UserList.class);
                 client.receivedUserList(userList);
+                break;
         }
     } catch (IOException e) {
         e.printStackTrace();

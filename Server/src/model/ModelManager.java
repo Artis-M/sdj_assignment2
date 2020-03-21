@@ -1,3 +1,5 @@
+package model;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -24,17 +26,20 @@ public class ModelManager implements Model
     {
         return message;
     }
-    public synchronized void addLog(String log)
-    {
-        String logValue = message.getLogSize() + ": " + log;
-        message.addLog(logValue);
-        property.firePropertyChange("add", null, logValue);
-    }
-
     @Override
     public UserList getUsers()
     {
        return users;
+    }
+
+    @Override
+    public void sendMessage() {
+
+    }
+
+    @Override
+    public void removeUser(String username) {
+users.removeUser(username);
     }
 
     @Override

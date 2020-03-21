@@ -1,3 +1,7 @@
+package model;
+
+import model.Message;
+import model.UserList;
 import utility.UnnamedPropertyChangeSubject;
 
 public interface Model extends UnnamedPropertyChangeSubject
@@ -9,5 +13,7 @@ public interface Model extends UnnamedPropertyChangeSubject
 
     UserList getUsers();
 
-    void addLog(String log);
+    void sendMessage();
+
+    void removeUser(String username);
 }

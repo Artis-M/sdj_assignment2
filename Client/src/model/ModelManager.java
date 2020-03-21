@@ -41,6 +41,11 @@ public class ModelManager implements Model, UnnamedPropertyChangeSubject
     //placeholder!!!!!!!!!!!!!!!!!!!!!
   }
 
+  @Override
+  public String getUsername() {
+    return username;
+  }
+
   @Override public void addListener(PropertyChangeListener listener)
   {
     propertyChangeSupport.addPropertyChangeListener(listener);
@@ -50,4 +55,5 @@ public class ModelManager implements Model, UnnamedPropertyChangeSubject
   {
     propertyChangeSupport.addPropertyChangeListener(listener);
   }
+
 }

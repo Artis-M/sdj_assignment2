@@ -1,3 +1,7 @@
+import mediator.ChatClientConnector;
+import model.Model;
+import model.ModelManager;
+
 public class Server
 {
     public static void main(String[] args)
