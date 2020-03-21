@@ -1,3 +1,7 @@
+package mediator;
+
+import model.Model;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -6,7 +10,7 @@ public class ChatClientConnector implements Runnable
 {
 
 
-    private final int PORT = 6789;
+    private final int PORT = 1337;
     private Model model;
     private boolean running;
     private ServerSocket welcomeSocket;

@@ -1,5 +1,14 @@
-import com.google.gson.Gson;
+package mediator;
 
+import com.google.gson.Gson;
+import model.Message;
+import model.Model;
+import model.UserList;
+import network.MessagePackage;
+import network.NetworkPackage;
+import network.UserListPackage;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
@@ -16,6 +25,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
     private PrintWriter out;
     private Model model;
     private boolean running;
+    private String username;
 
     public ChatClientHandler(Socket socket, Model model)
             throws IOException
@@ -26,6 +36,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
                 new InputStreamReader(socket.getInputStream()));
         this.out = new PrintWriter(socket.getOutputStream(), true);
         model.addListener(this);
+        this.username = "UnnamedUser";
     }
 
     @Override
@@ -33,41 +44,31 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
     {
         Gson gson = new Gson();
         running = true;
+        try {
+            username = in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         while (running)
         {
             try
             {
-                String request = in.readLine();
-                model.addLog("Client> " + request);
-                String user = in.readLine();
-                if (!model.getUsers().getList().contains(user))
-                {
-                    model.addUser(user);
-                }
-                model.addLog("Client> " + user);
-                if (user != null)
-                {
-                    Message message = new Message(request, user);
-                    String back = gson.toJson(message);
-                    out.println(back);
-                }
-                Message message = new Message(request);
-                String back = gson.toJson(message);
-                out.println(back);
-                if (request.contentEquals("quit"))
-                {
-                    for (int i = 0; i < model.getUsers().getList().size(); i++)
-                    {
-                        if (model.getUsers().getList().get(i).equals(user))
-                        {
-                            model.getUsers().getList().remove(i);
-                        }
-                    }
-                    close();
+String request = in.readLine();
+                NetworkPackage networkPackage = gson.fromJson(request, NetworkPackage.class);
+                switch (networkPackage.getType()){
+                    case MESSAGE:
+                        String packageString = gson.toJson(networkPackage);
+                        out.println(packageString);
+                        break;
+                    case USERLISTREQUEST:
+                        UserList userList = model.getUsers();
+                        NetworkPackage networkPackage1 = new UserListPackage(userList);
+                        String userListString = gson.toJson(networkPackage1);
+                        out.println(networkPackage1);
                 }
             } catch (Exception e)
             {
-                model.addLog("Client error");
+                model.removeUser(username);
                 close();
             }
         }
