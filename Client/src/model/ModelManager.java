@@ -4,6 +4,7 @@ import Utility.UnnamedPropertyChangeSubject;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class ModelManager implements Model, UnnamedPropertyChangeSubject
 {
@@ -13,6 +14,7 @@ public class ModelManager implements Model, UnnamedPropertyChangeSubject
   public ModelManager(String username)
   {
     this.username = username;
+    propertyChangeSupport = new PropertyChangeSupport(this);
   }
 
   @Override public void sendMessage()
@@ -20,10 +22,11 @@ public class ModelManager implements Model, UnnamedPropertyChangeSubject
     //Well as you can see the mediator is still missing so I have no clue on how to get this to work
   }
 
-  @Override public String getMessageFromServer()
+  @Override public String getMessageFromServer(Message message)
   {
-    Message message = new Message("Bob", "test message");
+    //placeholder!!!!!!!!!!!!!!!!!!!!!
     return message.getFullMessage();
+    //placeholder!!!!!!!!!!!!!!!!!!!!!
   }
 
   @Override public void setUsername(String username)
@@ -31,9 +34,11 @@ public class ModelManager implements Model, UnnamedPropertyChangeSubject
     this.username = username;
   }
 
-  @Override public UserList getUserList(UserList userList)
+  @Override public ArrayList<String> getUserList(UserList userList)
   {
-    return new UserList();
+    //placeholder!!!!!!!!!!!!!!!!!!!!!
+    return userList.getUserList();
+    //placeholder!!!!!!!!!!!!!!!!!!!!!
   }
 
   @Override public void addListener(PropertyChangeListener listener)

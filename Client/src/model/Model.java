@@ -2,10 +2,12 @@ package model;
 
 import Utility.UnnamedPropertyChangeSubject;
 
+import java.util.ArrayList;
+
 public interface Model extends UnnamedPropertyChangeSubject
 {
   void sendMessage();
-  String getMessageFromServer();
+  String getMessageFromServer(Message message);
   void setUsername(String username);
-  UserList getUserList(UserList userList);
+  ArrayList<String> getUserList(UserList userList);
 }
