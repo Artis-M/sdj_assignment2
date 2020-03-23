@@ -1,4 +1,4 @@
-package model;
+package Model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,6 +28,6 @@ public class Message
   {
     LocalDateTime timeDate = LocalDateTime.now();
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("HH:mm");
-    return dateFormatter + "   " + username + ": " + message;
+    return dateFormatter + " " + username + ": " + message;
   }
 }

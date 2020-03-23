@@ -1,8 +1,9 @@
-package view;
+package View;
 
 import ViewModel.ChatViewModel;
 import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -12,7 +13,7 @@ public class ChatController
 {
   @FXML TextField inputUsername;
   @FXML ListView<StringProperty> messagesList;
-  @FXML TextField chatField;
+  @FXML TextField textField;
   private Region root;
 
  private ViewHandler viewHandler;
@@ -23,8 +24,10 @@ public class ChatController
   this.viewHandler = viewHandler;
   this.root = root;
   this.chatViewModel = chatViewModel;
-  this.messagesList.setItems(chatViewModel.getItems());
+
   this.inputUsername.textProperty().bindBidirectional(chatViewModel.getUsername());
+  this.messagesList.setItems(chatViewModel.getItems());
+  this.textField.textProperty().bind(chatViewModel.getMessage());
  }
 
   public Region getRoot()
@@ -39,19 +42,18 @@ public class ChatController
 
   private @FXML void onConnect()
   {
-    chatViewModel.connect();
+    chatViewModel.connectToServer();
   }
-    @FXML
-    public void onEnter(ActionEvent ae){
-     chatViewModel.sendMessage(chatField.getText());
-     System.out.println("Enter Pressed");
-    }
 
   private @FXML void onCurrentUsers()
   {
     viewHandler.openView("userList");
   }
 
+  private @FXML void onEnter()
+  {
+     chatViewModel.sendMessageToServer();
+  }
 
 
 }

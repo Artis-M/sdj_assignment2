@@ -1,14 +1,13 @@
 package ViewModel;
 
+import Model.Model;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import model.Message;
-import model.Model;
-
+import Model.Message;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -16,7 +15,7 @@ public class ChatViewModel implements PropertyChangeListener
 {
   private StringProperty message;
   private StringProperty username;
-  private ObservableList<StringProperty> listView;
+  private ObservableList<StringProperty> items;
   private Model model;
 
   public ChatViewModel(Model model)
@@ -24,7 +23,7 @@ public class ChatViewModel implements PropertyChangeListener
     this.model = model;
     this.message = new SimpleStringProperty();
     this.username = new SimpleStringProperty();
-    this.listView = FXCollections.observableArrayList();
+    this.items = FXCollections.observableArrayList();
     this.model.addListener(this);
   }
 
@@ -38,30 +37,30 @@ public class ChatViewModel implements PropertyChangeListener
     return username;
   }
 
-
-  public void sendMessage(String message){
-    System.out.println("ViewModel got message");
-model.sendMessage(message);
-  }
-
-  public void connect(){
-    model.connect();
-  }
   public ObservableList<StringProperty> getItems()
   {
-    return listView;
+    return items;
+  }
+
+  public void sendMessageToServer()
+  {
+    model.sendMessage(message.get());
+  }
+
+  public void connectToServer()
+  {
+    model.setUsername(username.get());
   }
 
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     Platform.runLater(() ->
+        {
+            if(evt.getPropertyName().equals("Message"))
             {
-              if(evt.getPropertyName().equals("NewMessageFromServer"))
-              {
-                System.out.println("Even triggered and got the message");
-                listView.add(new SimpleStringProperty(((Message) evt.getNewValue()).getFullMessage()));
-              }
+              items.add(new SimpleStringProperty(((Message) evt.getNewValue()).getFullMessage()));
             }
+        }
     );
   }
 }

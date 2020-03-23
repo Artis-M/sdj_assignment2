@@ -11,7 +11,7 @@ public class MyApplication extends Application
 {
   @Override public void start(Stage stage) throws Exception
   {
-    Model model = new ModelManager("UnnamedUser");
+    Model model = new ModelManager("Bob");
     ChatViewModel chatViewModel = new ChatViewModel(model);
     UserListViewModel userListViewModel = new UserListViewModel(model);
     ViewModelFactory viewModelFactory = new ViewModelFactory(model);

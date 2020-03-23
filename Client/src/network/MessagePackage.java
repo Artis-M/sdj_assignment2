@@ -9,6 +9,7 @@ public class MessagePackage extends NetworkPackage
     public MessagePackage(NetworkType type, Message message)
     {
         super(NetworkType.MESSAGE);
+        this.message = message;
     }
 
     public Message getMessage()

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import model.Message;
 import model.Model;
 import model.UserList;
+import network.MessagePackage;
 import network.NetworkPackage;
 import network.NetworkType;
 import network.UserListRequest;
@@ -28,6 +29,8 @@ private Model model;
 
     private Gson gson;
 
+    private ChatClientReceiver chatClientReceiver;
+
     public ChatClient(Model model) {
         this.host = HOST;
         this.port = PORT;
@@ -46,6 +49,10 @@ private Model model;
             socket = new Socket(host, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
+            chatClientReceiver = new ChatClientReceiver(this, in);
+            Thread t0 = new Thread(chatClientReceiver);
+            t0.start();
+            System.out.println("Connected to server: " + socket.getInetAddress());
             out.println(model.getUsername());
         } catch (IOException e) {
             System.out.println("Failed to connect to the server, make sure that the server is running");
@@ -65,7 +72,8 @@ System.out.println("Closing the connection to the server has failed");
     @Override
     public synchronized void  sendMessage(Message message){
         gson = new Gson();
-        String dataPacket = gson.toJson(message);
+        NetworkPackage networkData = new MessagePackage(NetworkType.MESSAGE, message);
+        String dataPacket = gson.toJson(networkData);
         out.println(dataPacket);
     }
 

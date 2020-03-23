@@ -1,6 +1,8 @@
 package model;
 
 import Utility.UnnamedPropertyChangeSubject;
+import mediator.ChatClient;
+import mediator.ChatClientReceiver;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -9,23 +11,29 @@ import java.util.ArrayList;
 public class ModelManager implements Model, UnnamedPropertyChangeSubject
 {
   private String username;
-  private PropertyChangeSupport propertyChangeSupport;
+  private PropertyChangeSupport property;
+private ChatClient client;
+
 
   public ModelManager(String username)
   {
     this.username = username;
-    propertyChangeSupport = new PropertyChangeSupport(this);
+    property = new PropertyChangeSupport(this);
+    client = new ChatClient(this);
   }
 
-  @Override public void sendMessage()
+  @Override public void sendMessage(String message)
   {
     //Well as you can see the mediator is still missing so I have no clue on how to get this to work
+    Message message1 = new Message(username, message);
+    System.out.println("Message sent to client");
+    client.sendMessage(message1);
   }
 
-  @Override public String getMessageFromServer(Message message)
+  @Override public void getMessageFromServer(Message message)
   {
     //placeholder!!!!!!!!!!!!!!!!!!!!!
-    return message.getFullMessage();
+    property.firePropertyChange("NewMessageFromServer", null, message);
     //placeholder!!!!!!!!!!!!!!!!!!!!!
   }
 
@@ -46,14 +54,19 @@ public class ModelManager implements Model, UnnamedPropertyChangeSubject
     return username;
   }
 
+  @Override
+  public void connect() {
+    client.connect();
+  }
+
   @Override public void addListener(PropertyChangeListener listener)
   {
-    propertyChangeSupport.addPropertyChangeListener(listener);
+    property.addPropertyChangeListener(listener);
   }
 
   @Override public void removeListener(PropertyChangeListener listener)
   {
-    propertyChangeSupport.addPropertyChangeListener(listener);
+    property.addPropertyChangeListener(listener);
   }
 
 }
