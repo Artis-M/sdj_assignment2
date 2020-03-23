@@ -47,6 +47,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
         try {
             username = in.readLine();
             System.out.println(username);
+            model.addUser(username);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -71,17 +72,19 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
                         NetworkPackage networkPackage1 = new UserListPackage(userList);
                         String userListString = gson.toJson(networkPackage1);
                         System.out.println("received userlist request from client");
-                        out.println(networkPackage1);
+                        out.println(userListString);
                         break;
                 }
             } catch (Exception e)
             {
                 System.out.println("Error");
-                model.removeUser(username);
+
                 close();
             }
         }
         close();
+        model.removeUser(username);
+        System.out.println("UserLeft");
     }
 
     public void close()

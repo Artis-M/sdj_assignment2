@@ -11,31 +11,23 @@ import model.Model;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class UserListViewModel implements PropertyChangeListener
 {
   private Model model;
-  private ListView<StringProperty> listView;
-  private ObservableList<StringProperty> items;
+  private ObservableList<String> items;
   public UserListViewModel(Model model)
   {
     this.model = model;
-    // this.listView = something
     this.model.addListener(this);
     this.items = FXCollections.observableArrayList();
   }
-
-  public ListView<StringProperty> getListView()
-  {
-    return listView;
+  public void requestList(){
+    model.requestUserList();
   }
-
-  public void addToList(Message message)
-  {
-    //listView.getItems().add(new SimpleStringProperty(message.getMessage()));
-  }
-  public ObservableList<StringProperty> getItems()
+  public ObservableList<String> getItems()
   {
     return items;
   }
@@ -45,9 +37,11 @@ public class UserListViewModel implements PropertyChangeListener
             {
               if(evt.getPropertyName().equals("List"))
               {
+                System.out.println("Property change for user list fired");
                 ArrayList<String> list = (ArrayList<String>) evt.getNewValue();
+                items.clear();
                 for(int i=0;i<list.size();i++)
-                  items.add(new SimpleStringProperty(list.get(i)));
+                  items.add((list.get(i)));
               }
             }
     );

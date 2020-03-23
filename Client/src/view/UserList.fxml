@@ -9,7 +9,7 @@
     <center>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <ListView style="-fx-background-color: #36393f; -fx-text-fill: #b9bbbe;" />
+                <ListView fx:id="userList" style="-fx-background-color: #36393f; -fx-text-fill: #b9bbbe;" />
             </children>
         </VBox>
     </center>

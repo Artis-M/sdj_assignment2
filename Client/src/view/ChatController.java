@@ -11,7 +11,7 @@ import javafx.scene.layout.Region;
 public class ChatController
 {
   @FXML TextField inputUsername;
-  @FXML ListView<StringProperty> messagesList;
+  @FXML ListView<String> messagesList;
   @FXML TextField chatField;
   private Region root;
 
@@ -24,7 +24,6 @@ public class ChatController
   this.root = root;
   this.chatViewModel = chatViewModel;
   this.messagesList.setItems(chatViewModel.getItems());
-  this.inputUsername.textProperty().bindBidirectional(chatViewModel.getUsername());
  }
 
   public Region getRoot()
@@ -39,16 +38,19 @@ public class ChatController
 
   private @FXML void onConnect()
   {
+      chatViewModel.setUsername(inputUsername.getText());
     chatViewModel.connect();
   }
     @FXML
     public void onEnter(ActionEvent ae){
      chatViewModel.sendMessage(chatField.getText());
+     chatField.clear();
      System.out.println("Enter Pressed");
     }
 
   private @FXML void onCurrentUsers()
   {
+      chatViewModel.requestList();
     viewHandler.openView("userList");
   }
 

@@ -9,7 +9,8 @@ public interface Model extends UnnamedPropertyChangeSubject
   void sendMessage(String message);
   void getMessageFromServer(Message message);
   void setUsername(String username);
-  ArrayList<String> getUserList(UserList userList);
+  void getUserList(UserList userList);
+  void requestUserList();
   String getUsername();
   void connect();
 }

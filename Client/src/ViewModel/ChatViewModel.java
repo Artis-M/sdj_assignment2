@@ -16,7 +16,7 @@ public class ChatViewModel implements PropertyChangeListener
 {
   private StringProperty message;
   private StringProperty username;
-  private ObservableList<StringProperty> listView;
+  private ObservableList<String> listView;
   private Model model;
 
   public ChatViewModel(Model model)
@@ -47,11 +47,16 @@ model.sendMessage(message);
   public void connect(){
     model.connect();
   }
-  public ObservableList<StringProperty> getItems()
+  public ObservableList<String> getItems()
   {
     return listView;
   }
-
+  public void setUsername(String usernameString){
+model.setUsername(usernameString);
+  }
+  public void requestList(){
+    model.requestUserList();
+  }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     Platform.runLater(() ->
@@ -59,7 +64,7 @@ model.sendMessage(message);
               if(evt.getPropertyName().equals("NewMessageFromServer"))
               {
                 System.out.println("Even triggered and got the message");
-                listView.add(new SimpleStringProperty(((Message) evt.getNewValue()).getFullMessage()));
+                listView.add((((Message) evt.getNewValue()).getFullMessage()));
               }
             }
     );

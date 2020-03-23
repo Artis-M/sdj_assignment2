@@ -42,11 +42,16 @@ private ChatClient client;
     this.username = username;
   }
 
-  @Override public ArrayList<String> getUserList(UserList userList)
+  @Override public void getUserList(UserList userList)
   {
     //placeholder!!!!!!!!!!!!!!!!!!!!!
-    return userList.getUserList();
+    property.firePropertyChange("List", null, userList.getUserList());
     //placeholder!!!!!!!!!!!!!!!!!!!!!
+  }
+
+  @Override
+  public void requestUserList() {
+    client.requestUserList();
   }
 
   @Override

@@ -18,8 +18,7 @@ public class UserListController
     this.viewHandler = viewHandler;
     this.root = root;
     this.userListViewModel = userListViewModel;
-
-    this.userList.getCellFactory();   //this I don't know if it is the solution.
+    this.userList.setItems(userListViewModel.getItems());
   }
 
   public Region getRoot()
