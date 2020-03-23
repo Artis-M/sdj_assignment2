@@ -22,9 +22,9 @@ public class ModelManager implements Model
     }
 
     @Override
-    public Message getMessage()
+    public void getMessage(Message message)
     {
-        return message;
+        property.firePropertyChange("message", null, message);
     }
     @Override
     public UserList getUsers()

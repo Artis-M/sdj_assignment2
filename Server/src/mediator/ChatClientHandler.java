@@ -6,11 +6,13 @@ import model.Model;
 import model.UserList;
 import network.MessagePackage;
 import network.NetworkPackage;
+import network.NetworkType;
 import network.UserListPackage;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -39,6 +41,14 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
         this.username = "UnnamedUser";
     }
 
+    @Override public void propertyChange(PropertyChangeEvent evt)
+    {
+        Gson gson = new Gson();
+        NetworkPackage networkPackage = new MessagePackage(NetworkType.MESSAGE, (Message)evt.getNewValue());
+        String reply = gson.toJson(networkPackage);
+        out.println(reply);
+    }
+
     @Override
     public void run()
     {
@@ -64,7 +74,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
                         MessagePackage messagePackage = gson.fromJson(request, MessagePackage.class);
                         System.out.println("received message from client: ");
                         System.out.println(messagePackage.getMessage().getFullMessage());
-                        out.println(request);
+                        model.getMessage(messagePackage.getMessage());
 
                         break;
                     case USERLISTREQUEST:
@@ -78,6 +88,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
             } catch (Exception e)
             {
                 System.out.println("Error");
+                model.removeUser(username);
 
                 close();
             }
@@ -100,11 +111,4 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
             //
         }
     }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt)
-    {
-    }
-
-
 }

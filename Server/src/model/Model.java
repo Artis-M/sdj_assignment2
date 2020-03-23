@@ -9,7 +9,7 @@ public interface Model extends UnnamedPropertyChangeSubject
 {
     void addUser(String name);
 
-    Message getMessage();
+    void getMessage(Message message);
 
     UserList getUsers();
 

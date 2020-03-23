@@ -2,6 +2,7 @@ import ViewModel.ChatViewModel;
 import ViewModel.UserListViewModel;
 import ViewModel.ViewModelFactory;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.Model;
 import model.ModelManager;
@@ -18,5 +19,9 @@ public class MyApplication extends Application
 
     ViewHandler viewHandler = new ViewHandler(viewModelFactory);
     viewHandler.start(stage);
+  }
+  public void stop(){
+    Platform.exit();
+    System.exit(0);
   }
 }

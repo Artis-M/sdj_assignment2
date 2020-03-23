@@ -39,7 +39,14 @@ public class ChatController
   private @FXML void onConnect()
   {
       chatViewModel.setUsername(inputUsername.getText());
-    chatViewModel.connect();
+      if(inputUsername.getText().equals("")){
+          inputUsername.setPromptText("Select Username");
+          System.out.println("No username was set");
+      }
+      else{
+          chatViewModel.connect();
+      }
+
   }
     @FXML
     public void onEnter(ActionEvent ae){
