@@ -57,7 +57,6 @@ public class ChatClientConnector implements Runnable
             welcomeSocket.close();
         } catch (Exception e)
         {
-            //
         }
 
     }

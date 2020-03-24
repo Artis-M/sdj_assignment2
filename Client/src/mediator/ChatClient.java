@@ -8,22 +8,20 @@ import network.MessagePackage;
 import network.NetworkPackage;
 import network.NetworkType;
 import network.UserListRequest;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ChatClient implements ServerModel {
     private final int PORT = 1337;
     private final String HOST = "localhost";
     private String host;
     private int port;
-private Model model;
+    private Model model;
     private Socket socket;
-private boolean isConnected;
+    private boolean isConnected;
     private BufferedReader in;
     private PrintWriter out;
 
@@ -61,24 +59,26 @@ private boolean isConnected;
             System.out.println("Failed to connect to the server, make sure that the server is running");
         }
     }
+
     @Override
-    public void disconnect(){
-        try{
+    public void disconnect() {
+        try {
             in.close();
             out.close();
             socket.close();
             isConnected = false;
-        }
-catch (IOException e) {
-System.out.println("Closing the connection to the server has failed");
+        } catch (IOException e) {
+            System.out.println("Closing the connection to the server has failed");
         }
     }
+
     @Override
-    public boolean isConnected(){
+    public boolean isConnected() {
         return isConnected;
     }
+
     @Override
-    public synchronized void  sendMessage(Message message){
+    public synchronized void sendMessage(Message message) {
         gson = new Gson();
         NetworkPackage networkData = new MessagePackage(NetworkType.MESSAGE, message);
         String dataPacket = gson.toJson(networkData);
@@ -93,10 +93,11 @@ System.out.println("Closing the connection to the server has failed");
         out.println(requestString);
     }
 
-    public synchronized void receivedMessage(Message message){
+    public synchronized void receivedMessage(Message message) {
         model.getMessageFromServer(message);
     }
-    public synchronized void receivedUserList(UserList userList){
+
+    public synchronized void receivedUserList(UserList userList) {
         model.getUserList(userList);
     }
 }

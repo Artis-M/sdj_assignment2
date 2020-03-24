@@ -14,16 +14,6 @@ public class Message
     this.message = message;
   }
 
-  public String getUsername()
-  {
-    return username;
-  }
-
-  public String getMessage()
-  {
-    return message;
-  }
-
   public String getFullMessage()
   {
     LocalDateTime timeDate = LocalDateTime.now();

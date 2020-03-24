@@ -1,6 +1,0 @@
-package Utility;
-
-public enum NetworkType
-{
-  REQUEST_MESSAGE, REQUEST_LIST, GET_MESSAGE, GET_LIST, REQUEST_USERNAME
-}

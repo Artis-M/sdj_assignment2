@@ -5,7 +5,6 @@ import java.beans.PropertyChangeSupport;
 
 public class ModelManager implements Model
 {
-    private Message message;
     private PropertyChangeSupport property;
     private UserList users;
 
@@ -30,11 +29,6 @@ public class ModelManager implements Model
     public UserList getUsers()
     {
        return users;
-    }
-
-    @Override
-    public void sendMessage() {
-
     }
 
     @Override

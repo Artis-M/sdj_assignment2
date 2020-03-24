@@ -8,11 +8,8 @@ import network.MessagePackage;
 import network.NetworkPackage;
 import network.NetworkType;
 import network.UserListPackage;
-
-import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -70,12 +67,10 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
                 NetworkPackage networkPackage = gson.fromJson(request, NetworkPackage.class);
                 switch (networkPackage.getType()){
                     case MESSAGE:
-                        String packageString = gson.toJson(networkPackage);
                         MessagePackage messagePackage = gson.fromJson(request, MessagePackage.class);
                         System.out.println("received message from client: ");
                         System.out.println(messagePackage.getMessage().getFullMessage());
                         model.getMessage(messagePackage.getMessage());
-
                         break;
                     case USERLISTREQUEST:
                         UserList userList = model.getUsers();
@@ -89,13 +84,12 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
             {
                 System.out.println("Error");
                 model.removeUser(username);
-
                 close();
             }
         }
-        close();
         model.removeUser(username);
         System.out.println("UserLeft");
+        close();
     }
 
     public void close()
@@ -108,7 +102,6 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener
             socket.close();
         } catch (IOException e)
         {
-            //
         }
     }
 }

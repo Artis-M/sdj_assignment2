@@ -30,9 +30,7 @@ public class UserList
             {
                 userList.remove(i);
             }
+            i++;
         }
-    }
-    public int getSize(){
-        return userList.size();
     }
 }

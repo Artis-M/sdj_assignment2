@@ -1,17 +1,11 @@
 package ViewModel;
 
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
-import model.Message;
 import model.Model;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class UserListViewModel implements PropertyChangeListener
@@ -24,13 +18,12 @@ public class UserListViewModel implements PropertyChangeListener
     this.model.addListener(this);
     this.items = FXCollections.observableArrayList();
   }
-  public void requestList(){
-    model.requestUserList();
-  }
+
   public ObservableList<String> getItems()
   {
     return items;
   }
+
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     Platform.runLater(() ->

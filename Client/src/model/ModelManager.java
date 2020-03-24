@@ -2,11 +2,11 @@ package model;
 
 import Utility.UnnamedPropertyChangeSubject;
 import mediator.ChatClient;
-import mediator.ChatClientReceiver;
+
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
+
 
 public class ModelManager implements Model, UnnamedPropertyChangeSubject
 {
@@ -24,7 +24,6 @@ private ChatClient client;
 
   @Override public void sendMessage(String message)
   {
-    //Well as you can see the mediator is still missing so I have no clue on how to get this to work
     Message message1 = new Message(username, message);
     System.out.println("Message sent to client");
     client.sendMessage(message1);
@@ -32,9 +31,7 @@ private ChatClient client;
 
   @Override public void getMessageFromServer(Message message)
   {
-    //placeholder!!!!!!!!!!!!!!!!!!!!!
     property.firePropertyChange("NewMessageFromServer", null, message);
-    //placeholder!!!!!!!!!!!!!!!!!!!!!
   }
 
   @Override public void setUsername(String username)
@@ -44,9 +41,9 @@ private ChatClient client;
 
   @Override public void getUserList(UserList userList)
   {
-    //placeholder!!!!!!!!!!!!!!!!!!!!!
+
     property.firePropertyChange("List", null, userList.getUserList());
-    //placeholder!!!!!!!!!!!!!!!!!!!!!
+
   }
 
   @Override
