@@ -37,7 +37,9 @@ public class ChatViewModel implements PropertyChangeListener
   {
     return username;
   }
-
+public boolean isConnected(){
+  return model.isConnected();
+}
 
   public void sendMessage(String message){
     System.out.println("ViewModel got message");

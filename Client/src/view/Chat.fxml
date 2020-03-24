@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane stylesheets="view/Chat.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="600.0" style="-fx-background-color: #36393f;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ChatController">
+<BorderPane stylesheets="view/Style.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="600.0" style="-fx-background-color: #36393f;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ChatController">
     <center>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
@@ -39,6 +39,11 @@
                         <Insets left="5.0" top="10.0" />
                     </VBox.margin>
                 </Button>
+                <Label fx:id="errorLabel" text="errorLabel" textFill="RED">
+                    <VBox.margin>
+                        <Insets left="5.0" top="35.0" />
+                    </VBox.margin>
+                </Label>
             </children>
         </VBox>
     </right>

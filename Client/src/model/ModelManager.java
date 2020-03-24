@@ -64,6 +64,11 @@ private ChatClient client;
     client.connect();
   }
 
+  @Override
+  public boolean isConnected() {
+    return client.isConnected();
+  }
+
   @Override public void addListener(PropertyChangeListener listener)
   {
     property.addPropertyChangeListener(listener);

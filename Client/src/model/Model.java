@@ -13,4 +13,5 @@ public interface Model extends UnnamedPropertyChangeSubject
   void requestUserList();
   String getUsername();
   void connect();
+  boolean isConnected();
 }

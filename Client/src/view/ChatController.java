@@ -4,6 +4,7 @@ import ViewModel.ChatViewModel;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
@@ -13,6 +14,7 @@ public class ChatController
   @FXML TextField inputUsername;
   @FXML ListView<String> messagesList;
   @FXML TextField chatField;
+  @FXML Label errorLabel;
   private Region root;
 
  private ViewHandler viewHandler;
@@ -24,6 +26,7 @@ public class ChatController
   this.root = root;
   this.chatViewModel = chatViewModel;
   this.messagesList.setItems(chatViewModel.getItems());
+  errorLabel.setText("");
  }
 
   public Region getRoot()
@@ -43,8 +46,11 @@ public class ChatController
           inputUsername.setPromptText("Select Username");
           System.out.println("No username was set");
       }
-      else{
+      else if(!(chatViewModel.isConnected())){
           chatViewModel.connect();
+          inputUsername.setPromptText("");
+          errorLabel.setText("Connected");
+          errorLabel.setStyle("-fx-text-fill: green");
       }
 
   }
@@ -57,8 +63,14 @@ public class ChatController
 
   private @FXML void onCurrentUsers()
   {
-      chatViewModel.requestList();
-    viewHandler.openView("userList");
+      if(chatViewModel.isConnected()){
+          chatViewModel.requestList();
+          viewHandler.openView("userList");
+      }
+      else{
+errorLabel.setText("You must be connected");
+      }
+
   }
 
 

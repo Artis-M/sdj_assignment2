@@ -23,7 +23,7 @@ public class ChatClient implements ServerModel {
     private int port;
 private Model model;
     private Socket socket;
-
+private boolean isConnected;
     private BufferedReader in;
     private PrintWriter out;
 
@@ -35,12 +35,14 @@ private Model model;
         this.host = HOST;
         this.port = PORT;
         this.model = model;
+        this.isConnected = false;
     }
 
     public ChatClient(String host, int port, Model model) {
         this.port = port;
         this.host = host;
         this.model = model;
+        this.isConnected = false;
     }
 
     @Override
@@ -54,6 +56,7 @@ private Model model;
             t0.start();
             System.out.println("Connected to server: " + socket.getInetAddress());
             out.println(model.getUsername());
+            isConnected = true;
         } catch (IOException e) {
             System.out.println("Failed to connect to the server, make sure that the server is running");
         }
@@ -64,10 +67,15 @@ private Model model;
             in.close();
             out.close();
             socket.close();
+            isConnected = false;
         }
 catch (IOException e) {
 System.out.println("Closing the connection to the server has failed");
         }
+    }
+    @Override
+    public boolean isConnected(){
+        return isConnected;
     }
     @Override
     public synchronized void  sendMessage(Message message){
